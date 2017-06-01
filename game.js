@@ -155,16 +155,26 @@ food = {
   },
 
   autoMove : function () {
-    var x = Math.floor((Math.random() * 4) - 2);
-    switch (x){
-      case -2: this.x += this.size;
-      case -1: this.x -= this.size;
-      case 1: this.y += this.size;
-      default: this.y -= this.size;
-    }
+    var ran = Math.floor((Math.random() * 4) - 2);
+    var newx = this.x;
+    var newy = this.y;
+    do {
+      switch (ran) {
+        case -2:
+          newx += this.size;
+        case -1:
+          newx -= this.size;
+        case 1:
+          newy += this.size;
+        default:
+          newy -= this.size;
+      }
+    } while(this.isCollision(newx, newy));
+    this.x = newx;
+    this.y = newy;
   },
 
-  isCollision: function(x, y) {
+  isCollision: function(x,y) {
     if (x < this.size / 2 ||
         x > canvas.width ||
         y < this.size / 2 ||
